@@ -7,10 +7,6 @@
         {
             if (myDocument.Content == null)
                 throw new InvalidOperationException("Empty document!!!");
-
-            if (myDocument.Approver == null)
-                throw new InvalidOperationException("Please nominate an approver first.");
-
             base.Submit();
         }
         

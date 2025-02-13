@@ -2,7 +2,7 @@
 { 
     internal interface IObserver
     {
-        string Name { get; set; }       // Username
+        //string Name { get; set; }       // Username
         void Update(string message);    // Notify user of changes to document
     }
 }
