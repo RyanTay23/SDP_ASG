@@ -1,13 +1,19 @@
 ﻿namespace SDP_ASG
 {
-    internal class Document : ISubject
+    internal abstract class Document : ISubject
     {
         // Declare fields
         private DocumentState draft, underReview, rejected, approved, revision, state;
-        private string? content, message;
+        private string? title, message, format, type;
+        protected string content;
+        protected IHeader header;
+        protected IFooter footer;
         private List<IObserver> observers;
         private User owner;
         private User? approver;
+        private bool validEdit = true;
+        private IConversion conversion;
+
 
         // Getters & Setters for Document states 
         public DocumentState Draft
@@ -36,6 +42,11 @@
             set => revision = value;
         }
         // Getters & Setters for others
+        public string? Title
+        {
+            get => title;
+            set => title = value;
+        }
         public string? Content
         {
             get => content;
@@ -56,7 +67,26 @@
             get => approver;
             set => approver = value;
         }
-
+        public string? Format
+        {
+            get => format;
+            set => format = value;
+        }
+        public string? Type
+        {
+            get => type;
+            set => type = value;
+        }
+        public bool ValidEdit
+        {
+            get => validEdit;
+            set => validEdit = value;
+        }
+        public IConversion Conversion
+        {
+            get => conversion;
+            set => conversion = value;
+        }
         // SetState updates current state and notify observers
         public void SetState(DocumentState state)
         {
@@ -65,17 +95,18 @@
         }
 
         // Constructor
-        public Document(User user)
+        public Document()
         {
             draft = new Draft(this);
             underReview = new UnderReview(this);
             rejected = new Rejected(this);
             approved = new Approved(this);
             revision = new Revision(this);
-            state = draft;
-            observers = [];
-            owner = user;
-            this.RegisterObserver(user);
+            this.state = draft;
+            this.observers = [];
+            //this.owner = user;
+            //this.title = title;
+            //this.RegisterObserver(user);
         }
 
         // State Design Pattern methods
@@ -123,5 +154,11 @@
                 observer.Update(message);
             }
         }
+        public void AddContent(string content)
+        {
+            this.content += content + "\n";
+        }
+        public abstract void CreateDocument();
+        public abstract void Display();
     }
 }

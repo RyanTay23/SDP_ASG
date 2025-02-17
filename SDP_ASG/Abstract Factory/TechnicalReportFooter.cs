@@ -4,7 +4,7 @@
     {
         public string GetFooter()
         {
-            return "Technical Report Footer";
+            return "<Technical Report Footer>";
         }
     }
 }

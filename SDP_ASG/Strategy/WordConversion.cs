@@ -1,8 +1,8 @@
 ﻿namespace SDP_ASG
 {
-    internal class WordConversion : Conversion
+    internal class WordConversion : IConversion
     {
-        public void convertToFormat(Document document)
+        public void ConvertToFormat(Document document)
         {
             document.Format = "Word";
             Console.WriteLine($"Converting {document.Title} to Word...");
